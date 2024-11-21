@@ -117,9 +117,9 @@ export const Home = () => {
                 />
                 <h1 className="font-bold text-center text-5xl mb-10 text-emerald-500">Tasks</h1>
                 <div className="flex justify-center items-center">
-                  
+
                     <div className="container mx-auto my-10 p-6 w-2/4 min-w-[450px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
-                    <p className="font-bold text-center mb-10 text-orange-500">*To edit an active task click on task name</p>
+                        <p className="font-bold text-center mb-10 text-orange-500">*To edit an active task click on task name</p>
                         <div className="mx-auto w-full items-center md:w-8/12">
                             <div className="join flex justify-center items-center">
                                 <input
@@ -150,7 +150,7 @@ export const Home = () => {
                                                 type="checkbox"
                                                 checked={selectedTasks.includes(task._id)}
                                                 onChange={() => handleCheckboxChange(task._id)}
-                                                className="checkbox mt-5"
+                                                defaultChecked className="checkbox checkbox-error mt-6"
                                             />
                                             <div
                                                 className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl text-white rounded-box grid h-12 place-items-center w-96 cursor-pointer`}
@@ -192,7 +192,7 @@ export const Home = () => {
                                                 type="checkbox"
                                                 checked={selectedTasks.includes(task._id)}
                                                 onChange={() => handleCheckboxChange(task._id)}
-                                                className="checkbox mt-5"
+                                                defaultChecked className="checkbox checkbox-error mt-6"
                                             />
                                             <div className={`card mt-6 bg-green-500 text-2xl text-white rounded-box grid h-12 place-items-center w-96 line-through`}>
                                                 {task.name}
