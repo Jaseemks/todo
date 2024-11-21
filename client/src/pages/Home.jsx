@@ -144,7 +144,7 @@ export const Home = () => {
                                                 onChange={() => handleCheckboxChange(task._id)}
                                                 className="checkbox mt-5"
                                             />
-                                            <div className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl rounded-box grid h-12 place-items-center w-96`}>
+                                            <div className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl text-white rounded-box grid h-12 place-items-center w-96`}>
                                                 {task.name}
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@ export const Home = () => {
                                                 onChange={() => handleCheckboxChange(task._id)}
                                                 className="checkbox mt-5"
                                             />
-                                            <div className={`card mt-6 bg-green-500 text-2xl rounded-box grid h-12 place-items-center w-96 line-through`}>
+                                            <div className={`card mt-6 bg-green-500 text-2xl text-white rounded-box grid h-12 place-items-center w-96 line-through`}>
                                                 {task.name}
                                             </div>
                                         </div>
