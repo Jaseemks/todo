@@ -5,6 +5,7 @@ import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
 import checkIcon from '../assets/check-icon.png';
 import './Home.css';
+import { Skeleton } from '../components/Skeleton';
 
 export const Home = () => {
     const [Tasks, setTasks] = useState([]);
@@ -92,7 +93,7 @@ export const Home = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div><Skeleton/></div>;
     }
    const activeTasks = Tasks.filter(task => !task.isDone);
     const completedTasks = Tasks.filter(task => task.isDone);
