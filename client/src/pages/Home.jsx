@@ -42,9 +42,9 @@ export const Home = () => {
         try {
             await axiosInstance.put(`/markdone/${taskId}`, { completed: true });
             const tasksResponse = await axiosInstance.get('/tasklist');
-            const tasksData = tasksResponse.data.data || []; // Ensure fallback to an empty array
+            const tasksData = tasksResponse.data.data || [];
             setTasks(tasksData);
-    
+
             toast.success('Task marked as complete');
         } catch (error) {
             toast.error('Error marking task as complete');
@@ -94,6 +94,8 @@ export const Home = () => {
     if (loading) {
         return <div>Loading...</div>;
     }
+   const activeTasks = Tasks.filter(task => !task.isDone);
+    const completedTasks = Tasks.filter(task => task.isDone);
 
     return (
         <>
@@ -107,12 +109,12 @@ export const Home = () => {
                     alt="logo"
                     className="mx-auto h-24 w-auto mb-4 rotate-animation"
                 />
-                <h1 className="font-bold text-center text-5xl mb-10">Tasks</h1>
+                <h1 className="font-bold text-center text-5xl mb-10 text-emerald-500">Tasks</h1>
 
                 <div className="flex justify-center items-center">
                     <div
                         className="artboard artboard-horizontal phone-2 mx-auto p-6 w-2/4 object-cover rounded-lg shadow-2xl border border-gray-300 flex flex-col"
-                        style={{ paddingBottom: '5000px' }}
+                        style={{ paddingBottom: '1000px' }}
                     >
                         <div className="mx-auto w-full md:w-8/12">
                             <div className="join">
@@ -123,15 +125,17 @@ export const Home = () => {
                                     onChange={(e) => setNewTaskName(e.target.value)}
                                     className="input input-bordered join-item w-80"
                                 />
-                                <button className="btn btn-success font-semibold text-orange-50 join-item w-24"
+                                <button className="btn btn-success font-semibold text-orange-50 text-2xl join-item w-24"
                                     onClick={handleAddTask}>
                                     Add
                                 </button>
                             </div>
                         </div>
-                        <div className="flex w-full flex-col items-center mt-2">
-                            {Tasks && Tasks.length > 0 ? (
-                                Tasks.map((task) => (
+                        <h2 className="text-3xl font-bold text-red-500">Active Tasks</h2>
+                        <div className="flex w-full flex-col  mt-2">
+
+                            {activeTasks.length > 0 ? (
+                                activeTasks.map((task) => (
                                     <div key={task._id} className="flex flex-col items-center space-y-2 w-full mt-1">
                                         <div className="flex flex-row items-center space-x-2">
                                             <input
@@ -140,12 +144,9 @@ export const Home = () => {
                                                 onChange={() => handleCheckboxChange(task._id)}
                                                 className="checkbox mt-5"
                                             />
-                                            <div
-                                                className={`card mt-6 bg-base-300 text-2xl rounded-box grid h-12 place-items-center w-96 ${task.isDone ? 'line-through' : ''}`}
-                                            >
+                                            <div className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl rounded-box grid h-12 place-items-center w-96`}>
                                                 {task.name}
                                             </div>
-                                           
                                         </div>
                                         {!task.isDone && (
                                             <div className="flex items-center">
@@ -157,7 +158,7 @@ export const Home = () => {
                                                     style={{ width: '24px', height: '24px' }}
                                                 />
                                                 <span className="ml-2 cursor-pointer" onClick={() => handleMarkComplete(task._id)}>
-                                                    Mark as Done
+                                                    Mark as Completed
                                                 </span>
                                             </div>
                                         )}
@@ -165,21 +166,45 @@ export const Home = () => {
                                     </div>
                                 ))
                             ) : (
-                                <div>No tasks available</div>
+                                <div>No active tasks available</div>
+                            )}
+                        </div>
+                        <div className="mt-10">
+                            <h2 className="text-3xl font-bold text-emerald-500">Completed Tasks</h2>
+                            {completedTasks.length > 0 ? (
+                                completedTasks.map((task) => (
+                                    
+                                    <div key={task._id} className="flex flex-col items-center space-y-2 w-full mt-1">
+                                        <div className="flex flex-row items-center space-x-2">
+                                        <input
+                                                type="checkbox"
+                                                checked={selectedTasks.includes(task._id)}
+                                                onChange={() => handleCheckboxChange(task._id)}
+                                                className="checkbox mt-5"
+                                            />
+                                            <div className={`card mt-6 bg-green-500 text-2xl rounded-box grid h-12 place-items-center w-96 line-through`}>
+                                                {task.name}
+                                            </div>
+                                        </div>
+                                        <div className="divider divider-success my-1 w-full"></div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>No completed tasks available</div>
                             )}
                         </div>
 
-                        <button
-                            onClick={handleDeleteSelected}
-                            className="btn btn-error text-2xl mt-4"
-                            disabled={selectedTasks.length === 0}
-                        >
-                            Delete Selected
-                        </button>
+                        {selectedTasks.length > 0 && (
+                            <button
+                                onClick={handleDeleteSelected}
+                                className="btn btn-error text-2xl mt-4"
+                            >
+                                Delete Selected
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
         </>
     );
 };
-
