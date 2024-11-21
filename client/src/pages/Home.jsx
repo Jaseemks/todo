@@ -179,7 +179,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
-import carLogo from '../assets/logo.png';
+import Logo from '../assets/logo.png';
 import { axiosInstance } from '../config/axiosInstance';
 import { toast } from 'react-toastify';
 import checkIcon from '../assets/check-icon.png';
@@ -282,7 +282,7 @@ export const Home = () => {
 
             <div className="container mx-auto my-10 p-6 w-3/4 h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
                 <img
-                    src={carLogo}
+                    src={Logo}
                     alt="logo"
                     className="mx-auto h-24 w-auto mb-4 rotate-animation"
                 />
@@ -324,21 +324,27 @@ export const Home = () => {
                                             >
                                                 {task.name}
                                             </div>
-                                            {!task.isDone && (
+                                           
+                                        </div>
+                                        {!task.isDone && (
+                                            <div className="flex items-center">
                                                 <img
                                                     src={checkIcon}
                                                     alt="Mark Complete"
-                                                    className="ml-4 cursor-pointer"
+                                                    className="cursor-pointer"
                                                     onClick={() => handleMarkComplete(task._id)}
                                                     style={{ width: '24px', height: '24px' }}
                                                 />
-                                            )}
-                                        </div>
+                                                <span className="ml-2 cursor-pointer" onClick={() => handleMarkComplete(task._id)}>
+                                                    Mark as Done
+                                                </span>
+                                            </div>
+                                        )}
                                         <div className="divider divider-error my-1 w-full"></div>
                                     </div>
                                 ))
                             ) : (
-                                <div>No tasks available</div> // Fallback message if no tasks are present
+                                <div>No tasks available</div>
                             )}
                         </div>
 
@@ -355,3 +361,4 @@ export const Home = () => {
         </>
     );
 };
+
