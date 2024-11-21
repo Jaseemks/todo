@@ -1,4 +1,4 @@
-  @keyframes colorChange {
+  /* @keyframes colorChange {
     0% {
         color: #8F2D0E;
     }
@@ -18,4 +18,4 @@
 
 .animated-text {
     animation: colorChange 5s infinite ease-in-out;
-}
+} */

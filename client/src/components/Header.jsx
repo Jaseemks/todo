@@ -12,7 +12,7 @@ export const Header = () => {
                     className="ml-5 h-10"
                 />
             <motion.div 
-                className='animated-text text-4xl font-extrabold italic ml-24 font-sans' 
+                className='text-4xl font-extrabold text-white italic ml-24 font-sans' 
                 initial={{ opacity: 0, y: -10 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ duration: 0.5, delay: 0.1 }}
