@@ -104,7 +104,7 @@ export const Home = () => {
                 <Header />
             </div>
 
-            <div className="container mx-auto my-10 p-6 w-3/4 h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
+            <div className="container mx-auto my-10 p-6 w-3/4 min-w-[480px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
                 <img
                     src={Logo}
                     alt="logo"
@@ -114,7 +114,8 @@ export const Home = () => {
 
                 <div className="flex justify-center items-center">
                     {/* <div className="artboard artboard-horizontal phone-2 mx-auto p-6 w-2/4 object-cover rounded-lg shadow-2xl border border-gray-300 flex flex-col" style={{ paddingBottom: '1000px' }}> */}
-                    <div className="container mx-auto my-10 p-6 w-2/4 h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
+                    <div className="container mx-auto my-10 p-6 w-2/4 min-w-[450px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
+
                         <div className="mx-auto w-full items-center md:w-8/12">
                             <div className="join flex justify-center items-center">
                                 <input
