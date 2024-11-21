@@ -126,7 +126,7 @@ export const Home = () => {
                                     type="text"
                                     placeholder="Add a new Task"
                                     value={newTaskName}
-                                    onChange={(e) => setNewTaskName(e.target.value)}
+                                    onChange={(e) => setNewTaskName(e.target.value.toUpperCase())}
                                     className="input input-bordered join-item w-80"
                                     style={{ textTransform: 'uppercase' }}
                                 />
