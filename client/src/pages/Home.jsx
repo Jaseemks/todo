@@ -197,7 +197,7 @@ export const Home = () => {
                         {selectedTasks.length > 0 && (
                             <button
                                 onClick={handleDeleteSelected}
-                                className="btn btn-error text-2xl mt-4"
+                                className="btn btn-error text-2xl mt-4 min-w-[450px]"
                             >
                                 Delete Selected
                             </button>
