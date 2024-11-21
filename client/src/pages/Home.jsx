@@ -87,7 +87,7 @@ export const Home = () => {
             setNewTaskName("");
             toast.success('Task added successfully');
         } catch (error) {
-            toast.error('Error adding task');
+            toast.error(error);
         }
     };
 
