@@ -81,6 +81,34 @@ const doneTask = async (req, res, next) => {
     }
 }
 
+const editTask = async (req, res, next) => {
+    console.log("hit");
+    try {
+        const { id } = req.params;
+        const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({ success: false, message: "Task name is required" });
+        }
+
+        const taskUpdated = await Task.findByIdAndUpdate(id, { name: name }, { new: true });
+        if (!taskUpdated) {
+            return res.status(404).json({ success: false, message: "Task not found" });
+        }
+
+        console.log("Task updated successfully", taskUpdated);
+        res.status(200).json({ success: true, message: "Task updated successfully", data: taskUpdated });
+
+    } catch (error) {
+        console.error("Error updating task:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+            error: error.message || "An error occurred"
+        });
+    }
+};
+
+
 const getTasks = async (req, res, next) => {
     try {
         const tasks = await Task.find();
@@ -94,4 +122,4 @@ const getTasks = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = { newTask,deleteTask,doneTask,getTasks };
+module.exports = { newTask,deleteTask,doneTask,getTasks,editTask };
