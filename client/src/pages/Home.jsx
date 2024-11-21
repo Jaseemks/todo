@@ -12,17 +12,14 @@ export const Home = () => {
     const [loading, setLoading] = useState(true);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [newTaskName, setNewTaskName] = useState("");
+    const [editingTaskId, setEditingTaskId] = useState(null);
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
                 const tasksResponse = await axiosInstance.get('/tasklist');
                 const tasksData = tasksResponse.data.data || [];
-
-                console.log(tasksData);
-
                 setTasks(tasksData);
-
                 if (tasksData.length > 0) {
                     toast.success('Tasks fetched successfully');
                 } else {
@@ -45,7 +42,6 @@ export const Home = () => {
             const tasksResponse = await axiosInstance.get('/tasklist');
             const tasksData = tasksResponse.data.data || [];
             setTasks(tasksData);
-
             toast.success('Task marked as complete');
         } catch (error) {
             toast.error('Error marking task as complete');
@@ -75,27 +71,36 @@ export const Home = () => {
         }
     };
 
-    const handleAddTask = async () => {
+    const handleAddOrUpdateTask = async () => {
         if (newTaskName.trim() === "") {
             toast.error('Task name cannot be empty');
             return;
         }
 
         try {
-            const response = await axiosInstance.post('/newtask', { name: newTaskName });
-            const newTask = response.data.data;
-            setTasks((prevTasks) => [...prevTasks, newTask]);
+            if (editingTaskId) {
+                await axiosInstance.put(`/edit/${editingTaskId}`, { name: newTaskName });
+                toast.success('Task updated successfully');
+            } else {
+                const response = await axiosInstance.post('/newtask', { name: newTaskName });
+                const newTask = response.data.data;
+                setTasks((prevTasks) => [...prevTasks, newTask]);
+                toast.success('Task added successfully');
+            }
             setNewTaskName("");
-            toast.success('Task added successfully');
+            setEditingTaskId(null);
+            const tasksResponse = await axiosInstance.get('/tasklist');
+            setTasks(tasksResponse.data.data || []);
         } catch (error) {
             toast.error(error);
         }
     };
 
     if (loading) {
-        return <div><Skeleton/></div>;
+        return <div><Skeleton /></div>;
     }
-   const activeTasks = Tasks.filter(task => !task.isDone);
+
+    const activeTasks = Tasks.filter(task => !task.isDone);
     const completedTasks = Tasks.filter(task => task.isDone);
 
     return (
@@ -124,14 +129,18 @@ export const Home = () => {
                                     onChange={(e) => setNewTaskName(e.target.value)}
                                     className="input input-bordered join-item w-80"
                                 />
-                                <button className="btn btn-success font-semibold text-orange-50 text-2xl join-item w-24"
-                                    onClick={handleAddTask}>
-                                    Add
+                                <button
+                                    className={`btn ${editingTaskId ? "btn-warning" : "btn-success"} font-semibold text-orange-50 text-2xl join-item w-24`}
+                                    onClick={handleAddOrUpdateTask}
+                                >
+                                    {editingTaskId ? "Edit" : "Add"}
                                 </button>
+
                             </div>
                         </div>
+
                         <h2 className="text-3xl font-bold text-red-500">Active Tasks</h2>
-                        <div className="flex w-full flex-col  mt-2">
+                        <div className="flex w-full flex-col mt-2">
 
                             {activeTasks.length > 0 ? (
                                 activeTasks.map((task) => (
@@ -143,24 +152,28 @@ export const Home = () => {
                                                 onChange={() => handleCheckboxChange(task._id)}
                                                 className="checkbox mt-5"
                                             />
-                                            <div className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl text-white rounded-box grid h-12 place-items-center w-96`}>
+                                            <div
+                                                className={`card mt-6 ${task.isDone ? 'bg-green-500 line-through' : 'bg-red-500'} text-2xl text-white rounded-box grid h-12 place-items-center w-96 cursor-pointer`}
+                                                onClick={() => {
+                                                    setEditingTaskId(task._id);
+                                                    setNewTaskName(task.name);
+                                                }}
+                                            >
                                                 {task.name}
                                             </div>
                                         </div>
-                                        {!task.isDone && (
-                                            <div className="flex items-center">
-                                                <img
-                                                    src={checkIcon}
-                                                    alt="Mark Complete"
-                                                    className="cursor-pointer"
-                                                    onClick={() => handleMarkComplete(task._id)}
-                                                    style={{ width: '24px', height: '24px' }}
-                                                />
-                                                <span className="ml-2 cursor-pointer" onClick={() => handleMarkComplete(task._id)}>
-                                                    Mark as Completed
-                                                </span>
-                                            </div>
-                                        )}
+                                        <div className="flex items-center">
+                                            <img
+                                                src={checkIcon}
+                                                alt="Mark Complete"
+                                                className="cursor-pointer"
+                                                onClick={() => handleMarkComplete(task._id)}
+                                                style={{ width: '24px', height: '24px' }}
+                                            />
+                                            <span className="ml-2 cursor-pointer" onClick={() => handleMarkComplete(task._id)}>
+                                                Mark as Completed
+                                            </span>
+                                        </div>
                                         <div className="divider divider-error my-1 w-full"></div>
                                     </div>
                                 ))
@@ -168,14 +181,14 @@ export const Home = () => {
                                 <div>No active tasks available</div>
                             )}
                         </div>
+
                         <div className="mt-10">
                             <h2 className="text-3xl font-bold text-emerald-500">Completed Tasks</h2>
                             {completedTasks.length > 0 ? (
                                 completedTasks.map((task) => (
-                                    
                                     <div key={task._id} className="flex flex-col items-center space-y-2 w-full mt-1">
                                         <div className="flex flex-row items-center space-x-2">
-                                        <input
+                                            <input
                                                 type="checkbox"
                                                 checked={selectedTasks.includes(task._id)}
                                                 onChange={() => handleCheckboxChange(task._id)}
