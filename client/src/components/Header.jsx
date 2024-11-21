@@ -18,7 +18,7 @@ export const Header = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 whileHover={{ scale: 1.5 }}
             >
-                ToDo App
+                ToDo List App
             </motion.div>
         </div>
     )
