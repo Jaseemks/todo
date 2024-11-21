@@ -5,7 +5,7 @@ import carLogo from '../assets/logo.png';
 
 export const Header = () => {
     return (
-        <div className="navbar bg-emerald-600 border-solid rounded-lg mx-5 mr-5">
+        <div className="navbar bg-emerald-600 border-solid rounded-lg mx-5 mr-5 min-w-[450px]">
             <img
                     src={carLogo}
                     alt="logo"
