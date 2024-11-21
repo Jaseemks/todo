@@ -118,7 +118,7 @@ export const Home = () => {
                 <h1 className="font-bold text-center text-5xl mb-10 text-emerald-500">Tasks</h1>
                 <div className="flex justify-center items-center">
 
-                    <div className="container mx-auto my-10 p-6 w-2/4 min-w-[450px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
+                    <div className="container mx-auto my-10 p-6 w-2/4 min-w-[450px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300" >
                         <p className="font-bold text-center mb-10 text-orange-500">*To edit an active task click on task name</p>
                         <div className="mx-auto w-full items-center md:w-8/12">
                             <div className="join flex justify-center items-center">
@@ -128,7 +128,6 @@ export const Home = () => {
                                     value={newTaskName}
                                     onChange={(e) => setNewTaskName(e.target.value.toUpperCase())}
                                     className="input input-bordered join-item w-80"
-                                    style={{ textTransform: 'uppercase' }}
                                 />
 
                                 <button
