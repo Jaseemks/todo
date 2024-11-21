@@ -84,6 +84,8 @@ const doneTask = async (req, res, next) => {
 const getTasks = async (req, res, next) => {
     try {
         const tasks = await Task.find();
+        console.log("hittttttttttttttttttttt");
+        
 
         res.status(200).json({ success: true, message: "Tasks fetched", data: tasks });
         console.log(tasks);
