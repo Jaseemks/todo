@@ -128,7 +128,9 @@ export const Home = () => {
                                     value={newTaskName}
                                     onChange={(e) => setNewTaskName(e.target.value)}
                                     className="input input-bordered join-item w-80"
+                                    style={{ textTransform: 'uppercase' }}
                                 />
+
                                 <button
                                     className={`btn ${editingTaskId ? "btn-warning" : "btn-success"} font-semibold text-orange-50 text-2xl join-item w-24`}
                                     onClick={handleAddOrUpdateTask}
