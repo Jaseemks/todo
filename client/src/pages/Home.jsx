@@ -105,9 +105,6 @@ export const Home = () => {
 
     return (
         <>
-            <div>
-                <Header />
-            </div>
 
             <div className="container mx-auto my-10 p-6 w-3/4 min-w-[480px] h-auto object-cover rounded-lg shadow-2xl border border-gray-300">
                 <img
